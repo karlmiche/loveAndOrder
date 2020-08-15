@@ -14,7 +14,6 @@ def sayHello():
     return "hello! we are home! 🎟"
 
 # SYNTAX ANALYSIS TEST CALL
-@app.route('/analyze')
 def sample_analyze_syntax(text_content):
     """
     Analyzing Syntax in a String
@@ -25,14 +24,12 @@ def sample_analyze_syntax(text_content):
 
     client = language_v1.LanguageServiceClient()
 
-    text_content = 'This is a short sentence.'
+    # text_content = 'This is a short sentence.'
 
     # Available types: PLAIN_TEXT, HTML
     type_ = enums.Document.Type.PLAIN_TEXT
 
     # Optional. If not specified, the language is automatically detected.
-    # For list of supported languages:
-    # https://cloud.google.com/natural-language/docs/languages
     language = "en"
     document = {"content": text_content, "type": type_, "language": language}
 
@@ -49,8 +46,6 @@ def sample_analyze_syntax(text_content):
             u"Location of this token in overall document: {}".format(text.begin_offset)
         )
         # Get the part of speech information for this token.
-        # Parts of spech are as defined in:
-        # http://www.lrec-conf.org/proceedings/lrec2012/pdf/274_Paper.pdf
         part_of_speech = token.part_of_speech
         # Get the tag, e.g. NOUN, ADJ for Adjective, et al.
         print(
@@ -101,5 +96,5 @@ def getNewsComments():
     # turn the list into a string with join magic
     separator = ','
     content = separator.join(comments_list)
-    return content
-    
+    # return jsonify(sample_analyze_syntax(content))
+    return "hello this was the news page!"
