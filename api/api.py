@@ -28,6 +28,8 @@ def sample_analyze_syntax(text_content):
     # Available values: NONE, UTF8, UTF16, UTF32
     encoding_type = enums.EncodingType.UTF8
 
+    speech_parts = []
+
     response = client.analyze_syntax(document, encoding_type=encoding_type)
     # Loop through tokens returned from the API
     for token in response.tokens:
@@ -44,7 +46,9 @@ def sample_analyze_syntax(text_content):
             )
         )
 
-        return enums.PartOfSpeech.Tag(part_of_speech.tag).name
+        speech_parts.append({"Token text": text.content, "Part of speech": enums.PartOfSpeech.Tag(part_of_speech.tag).name})
+
+    return speech_parts
 
     
 # NYT API COMMENTS GET ROUTE
@@ -67,5 +71,19 @@ def getNewsComments():
     # turn the list into a string with join magic
     separator = ','
     content = separator.join(comments_list)
+    # this get
     return jsonify(sample_analyze_syntax(content))
     # return content
+
+
+# ALGORITHM TO MAKE SONNET?
+
+# for each word
+    # make lists of different word types
+
+    # for each word in each list
+        # count its syllables
+        # check for certain vowels
+
+# make a line of a certain length of syllables
+
