@@ -15,16 +15,8 @@ def sayHello():
 
 # SYNTAX ANALYSIS TEST CALL
 def sample_analyze_syntax(text_content):
-    """
-    Analyzing Syntax in a String
-
-    Args:
-      text_content The text content to analyze
-    """
 
     client = language_v1.LanguageServiceClient()
-
-    # text_content = 'This is a short sentence.'
 
     # Available types: PLAIN_TEXT, HTML
     type_ = enums.Document.Type.PLAIN_TEXT
@@ -42,10 +34,8 @@ def sample_analyze_syntax(text_content):
         # Get the text content of this token. Usually a word or punctuation.
         text = token.text
         print(u"Token text: {}".format(text.content))
-        print(
-            u"Location of this token in overall document: {}".format(text.begin_offset)
-        )
-        # Get the part of speech information for this token.
+    
+        # # Get the part of speech information for this token.
         part_of_speech = token.part_of_speech
         # Get the tag, e.g. NOUN, ADJ for Adjective, et al.
         print(
@@ -53,28 +43,10 @@ def sample_analyze_syntax(text_content):
                 enums.PartOfSpeech.Tag(part_of_speech.tag).name
             )
         )
-        # Get the voice, e.g. ACTIVE or PASSIVE
-        print(u"Voice: {}".format(enums.PartOfSpeech.Voice(part_of_speech.voice).name))
-        # Get the tense, e.g. PAST, FUTURE, PRESENT, et al.
-        print(u"Tense: {}".format(enums.PartOfSpeech.Tense(part_of_speech.tense).name))
-        # See API reference for additional Part of Speech information available
-        # Get the lemma of the token. Wikipedia lemma description
-        # https://en.wikipedia.org/wiki/Lemma_(morphology)
-        print(u"Lemma: {}".format(token.lemma))
-        # Get the dependency tree parse information for this token.
-        # For more information on dependency labels:
-        # http://www.aclweb.org/anthology/P13-2017
-        dependency_edge = token.dependency_edge
-        print(u"Head token index: {}".format(dependency_edge.head_token_index))
-        print(
-            u"Label: {}".format(enums.DependencyEdge.Label(dependency_edge.label).name)
-        )
 
-    # Get the language of the text, which will be the same as
-    # the language specified in the request or, if not specified,
-    # the automatically-detected language.
-    print(u"Language of the text: {}".format(response.language))
+        return enums.PartOfSpeech.Tag(part_of_speech.tag).name
 
+    
 # NYT API COMMENTS GET ROUTE
 @app.route('/news')
 def getNewsComments():
@@ -87,14 +59,13 @@ def getNewsComments():
     comments_list = []
 
     index = 0
-
     while index < len(comments):
-        for key in comments[index]:
-            comments_list.append(comments[index]['commentBody'])
+    # for key in comments[index]:
+        comments_list.append(comments[index]['commentBody'])
         index += 1
     
     # turn the list into a string with join magic
     separator = ','
     content = separator.join(comments_list)
-    # return jsonify(sample_analyze_syntax(content))
-    return "hello this was the news page!"
+    return jsonify(sample_analyze_syntax(content))
+    # return content
