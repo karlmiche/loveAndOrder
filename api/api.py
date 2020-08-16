@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 import requests
+import random
 from newsapi import NewsApiClient
 from settings import API_KEY
 import pprint
@@ -12,6 +13,22 @@ app = Flask(__name__)
 @app.route('/home')
 def sayHello():
     return "hello! we are home! 🎟"
+
+# # count syllables function
+# def syllable_count(word):
+#     word = word.lower()
+#     count = 0
+#     vowels = "aeiouy"
+#     if word[0] in vowels:
+#         count += 1
+#     for index in range(1, len(word)):
+#         if word[index] in vowels and word[index - 1] not in vowels:
+#             count += 1
+#     if word.endswith("e"):
+#         count -= 1
+#     if count == 0:
+#         count += 1
+#     return count
 
 # SYNTAX ANALYSIS TEST CALL
 def sample_analyze_syntax(text_content):
@@ -27,8 +44,6 @@ def sample_analyze_syntax(text_content):
 
     # Available values: NONE, UTF8, UTF16, UTF32
     encoding_type = enums.EncodingType.UTF8
-
-    # speech_parts = []
 
     # make lists of different word types
     adverbs = []
@@ -47,18 +62,10 @@ def sample_analyze_syntax(text_content):
     # Loop through tokens returned from the API
     for token in response.tokens:
         # Get the text content of this token. Usually a word or punctuation.
-        text = token.text
-        print(u"Token text: {}".format(text.content))
-    
+        text = token.text    
         # # Get the part of speech information for this token.
         part_of_speech = token.part_of_speech
-        # Get the tag, e.g. NOUN, ADJ for Adjective, et al.
-        print(
-            u"Part of Speech tag: {}".format(
-                enums.PartOfSpeech.Tag(part_of_speech.tag).name
-            )
-        )
-        
+    
         # this is where we start collecting different lists of words
         if enums.PartOfSpeech.Tag(part_of_speech.tag).name == "VERB":
             verbs.append(text.content)
@@ -83,31 +90,57 @@ def sample_analyze_syntax(text_content):
         elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "PRT":
             prts.append(text.content)
 
-    # speech_parts.append({"Token text": text.content, "Part of speech": enums.PartOfSpeech.Tag(part_of_speech.tag).name})
-     # this returns a list of lists with these parts of speech inside
+    # parts = [verbs, nouns, adverbs, pronouns, adpositions, punctuation, determinatives, adjectives, numbers, conjunctions, prts]
+    # print(f"Ⓜ️{parts[0][0]}")
+
+    # not a randomized or organized poem yet
+    # line_text = str(line)
+
+    random_noun = random.choice(nouns)
+    random_verb = random.choice(verbs)
+    random_adverb = random.choice(adverbs)
+    random_pronoun = random.choice(pronouns)
+    random_adposition = random.choice(adpositions)
+    random_punctuation = random.choice(punctuation)
+    random_determinative = random.choice(determinatives)
+    random_adjective = random.choice(adjectives)
+    random_number = random.choice(numbers)
+    random_conjunction = random.choice(conjunctions)
+    random_prt = random.choice(prts)
+
+    random_parts = [random_noun, random_verb, random_adverb, random_pronoun, random_adposition, random_punctuation, random_determinative, random_adjective, random_number, random_conjunction, random_prt]
+    random_word = random.choice(random_parts)
+
+    line_one = random_word, random_word, random_word, random_word, random_word, random_word
+    line_one_text = str(line_one)
+
+    my_poem = {
+        'line_one': line_one_text
+        # 'line_two': [random_number, random_conjunction, random_verb, random_punctuation],
+        # 'line_three': [random_adjective, random_prt, random_determinative, random_adverb, random_verb],
+        # 'line_four': [random_noun, random_determinative, random_conjunction, random_verb],
+        # 'line_five': [random_noun, random_adverb, random_verb, random_adposition],
+        # 'line_six': [],
+        # 'line_seven': [],
+        # 'line_eight': [],
+        # 'line_nine': [],
+        # 'line_ten': [],
+        # 'line_eleven': []
+        # 'line_twelve': []
+        # 'line_thirteen': [],
+        # 'line_fourteen': []
+    }
+
+    # separator = ','
+    # lines = separator.join(line)
+
+    return my_poem
     # return verbs, nouns, adverbs, pronouns, adpositions, punctuation, determinatives, adjectives, numbers, conjunctions, prts
 
-        # count syllables function
-        def syllable_count(word):
-        word = word.lower()
-        count = 0
-        vowels = "aeiouy"
-        if word[0] in vowels:
-            count += 1
-        for index in range(1, len(word)):
-            if word[index] in vowels and word[index - 1] not in vowels:
-                count += 1
-        if word.endswith("e"):
-            count -= 1
-        if count == 0:
-            count += 1
-        
-        return count
-
+    # speech_parts.append({"Token text": text.content, "Part of speech": enums.PartOfSpeech.Tag(part_of_speech.tag).name})
+    # this returns a list of lists with these parts of speech inside
 
    
-
-    
 # NYT API COMMENTS GET ROUTE
 @app.route('/news')
 def getNewsComments():
@@ -132,7 +165,5 @@ def getNewsComments():
     return jsonify(sample_analyze_syntax(content))
     # return content
 
-
-# ALGORITHM TO MAKE SONNET?
 
 
