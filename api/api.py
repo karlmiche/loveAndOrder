@@ -14,22 +14,6 @@ app = Flask(__name__)
 def sayHello():
     return "hello! we are home! 🎟"
 
-# # count syllables function
-# def syllable_count(word):
-#     word = word.lower()
-#     count = 0
-#     vowels = "aeiouy"
-#     if word[0] in vowels:
-#         count += 1
-#     for index in range(1, len(word)):
-#         if word[index] in vowels and word[index - 1] not in vowels:
-#             count += 1
-#     if word.endswith("e"):
-#         count -= 1
-#     if count == 0:
-#         count += 1
-#     return count
-
 # SYNTAX ANALYSIS TEST CALL
 def sample_analyze_syntax(text_content):
 
@@ -96,51 +80,23 @@ def sample_analyze_syntax(text_content):
     # not a randomized or organized poem yet
     # line_text = str(line)
 
-    random_noun = random.choice(nouns)
-    random_verb = random.choice(verbs)
-    random_adverb = random.choice(adverbs)
-    random_pronoun = random.choice(pronouns)
-    random_adposition = random.choice(adpositions)
-    random_punctuation = random.choice(punctuation)
-    random_determinative = random.choice(determinatives)
-    random_adjective = random.choice(adjectives)
-    random_number = random.choice(numbers)
-    random_conjunction = random.choice(conjunctions)
-    random_prt = random.choice(prts)
+    line_one = f"some {nouns[0]} {verbs[0]} {adjectives[0]} {determinatives[0]}:"
+    line_two = f"{adjectives[1]} {nouns[18]}s {verbs[17]}"
+    line_three = f"and {determinatives[2]} {nouns[2]} {adverbs[2]} {verbs[2]} {adjectives[2]} today."
+    line_four = f"{pronouns[6]} {nouns[4]} {determinatives[4]} {adjectives[4]} {nouns[13]}"
+    line_five = f"and {determinatives[5]} {nouns[5]} {adverbs[5]} {verbs[5]}s {nouns[19]} enough."
+    line_six = f"{determinatives[6]} {adjectives[6]} {nouns[17]} {conjunctions[8]},"
+    line_seven = f"{verbs[7]} {determinatives[7]} {adjectives[7]}, {verbs[8]}, {conjunctions[7]} {adverbs[11]}:"
+    line_eight = f"{numbers[3]} {adverbs[5]} {verbs[3]} {verbs[12]} my {nouns[16]}"
+    line_nine = f"{nouns[2]} {adjectives[9]} {verbs[9]}"
+    line_ten = f"{prts[10]} {adverbs[11]} {adjectives[10]} {verbs[11]}"
 
-    random_parts = [random_noun, random_verb, random_adverb, random_pronoun, random_adposition, random_punctuation, random_determinative, random_adjective, random_number, random_conjunction, random_prt]
-    random_word = random.choice(random_parts)
-
-    line_one = random_word, random_word, random_word, random_word, random_word, random_word
-    line_one_text = str(line_one)
-
-    my_poem = {
-        'line_one': line_one_text
-        # 'line_two': [random_number, random_conjunction, random_verb, random_punctuation],
-        # 'line_three': [random_adjective, random_prt, random_determinative, random_adverb, random_verb],
-        # 'line_four': [random_noun, random_determinative, random_conjunction, random_verb],
-        # 'line_five': [random_noun, random_adverb, random_verb, random_adposition],
-        # 'line_six': [],
-        # 'line_seven': [],
-        # 'line_eight': [],
-        # 'line_nine': [],
-        # 'line_ten': [],
-        # 'line_eleven': []
-        # 'line_twelve': []
-        # 'line_thirteen': [],
-        # 'line_fourteen': []
-    }
-
-    # separator = ','
-    # lines = separator.join(line)
-
-    return my_poem
+    return line_one, line_two, line_three, line_four, line_five, line_six, line_seven, line_eight, line_nine, line_ten
     # return verbs, nouns, adverbs, pronouns, adpositions, punctuation, determinatives, adjectives, numbers, conjunctions, prts
 
     # speech_parts.append({"Token text": text.content, "Part of speech": enums.PartOfSpeech.Tag(part_of_speech.tag).name})
     # this returns a list of lists with these parts of speech inside
 
-   
 # NYT API COMMENTS GET ROUTE
 @app.route('/news')
 def getNewsComments():
@@ -164,6 +120,13 @@ def getNewsComments():
     # this get
     return jsonify(sample_analyze_syntax(content))
     # return content
+
+@app.route('/topnews')
+def getTopHeadlines():
+    url = f'https://api.nytimes.com/svc/topstories/v2/home.json?api-key={API_KEY}'
+    data = requests.get(url).json()
+
+    return jsonify
 
 
 
