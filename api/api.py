@@ -28,7 +28,20 @@ def sample_analyze_syntax(text_content):
     # Available values: NONE, UTF8, UTF16, UTF32
     encoding_type = enums.EncodingType.UTF8
 
-    speech_parts = []
+    # speech_parts = []
+
+    # make lists of different word types
+    adverbs = []
+    verbs = []
+    pronouns = []
+    nouns = []
+    adpositions = []
+    punctuation = []
+    determinatives = []
+    adjectives = []
+    numbers = []
+    conjunctions = []
+    prts = []
 
     response = client.analyze_syntax(document, encoding_type=encoding_type)
     # Loop through tokens returned from the API
@@ -45,10 +58,54 @@ def sample_analyze_syntax(text_content):
                 enums.PartOfSpeech.Tag(part_of_speech.tag).name
             )
         )
+        
+        # this is where we start collecting different lists of words
+        if enums.PartOfSpeech.Tag(part_of_speech.tag).name == "VERB":
+            verbs.append(text.content)
+        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "NOUN":
+            nouns.append(text.content)
+        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "ADV":
+            adverbs.append(text.content)
+        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "PRON":
+            pronouns.append(text.content)
+        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "ADP":
+            adpositions.append(text.content)
+        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "PUNCT":
+            punctuation.append(text.content)
+        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "DET":
+            determinatives.append(text.content)
+        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "ADJ":
+            adjectives.append(text.content)
+        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "NUM":
+            numbers.append(text.content)
+        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "CONJ":
+            conjunctions.append(text.content)
+        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "PRT":
+            prts.append(text.content)
 
-        speech_parts.append({"Token text": text.content, "Part of speech": enums.PartOfSpeech.Tag(part_of_speech.tag).name})
+    # speech_parts.append({"Token text": text.content, "Part of speech": enums.PartOfSpeech.Tag(part_of_speech.tag).name})
+     # this returns a list of lists with these parts of speech inside
+    # return verbs, nouns, adverbs, pronouns, adpositions, punctuation, determinatives, adjectives, numbers, conjunctions, prts
 
-    return speech_parts
+        # count syllables function
+        def syllable_count(word):
+        word = word.lower()
+        count = 0
+        vowels = "aeiouy"
+        if word[0] in vowels:
+            count += 1
+        for index in range(1, len(word)):
+            if word[index] in vowels and word[index - 1] not in vowels:
+                count += 1
+        if word.endswith("e"):
+            count -= 1
+        if count == 0:
+            count += 1
+        
+        return count
+
+
+   
 
     
 # NYT API COMMENTS GET ROUTE
@@ -78,12 +135,4 @@ def getNewsComments():
 
 # ALGORITHM TO MAKE SONNET?
 
-# for each word
-    # make lists of different word types
-
-    # for each word in each list
-        # count its syllables
-        # check for certain vowels
-
-# make a line of a certain length of syllables
 
