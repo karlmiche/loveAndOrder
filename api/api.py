@@ -1,14 +1,14 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
+from flask_cors import CORS
 import requests
 import random
-from newsapi import NewsApiClient
 from settings import API_KEY
 import pprint
-import datetime as dt
 from google.cloud import language_v1
 from google.cloud.language_v1 import enums 
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/home')
 def sayHello():
