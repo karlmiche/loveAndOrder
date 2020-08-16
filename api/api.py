@@ -80,13 +80,13 @@ def sample_analyze_syntax(text_content):
     # not a randomized or organized poem yet
     # line_text = str(line)
 
-    line_one = f"some {nouns[0]} {verbs[0]} {adjectives[0]} {determinatives[0]}:"
+    line_one = f"{nouns[0]} {verbs[0]} {adjectives[0]} {determinatives[3]}"
     line_two = f"{adjectives[1]} {nouns[18]}s {verbs[17]}"
     line_three = f"and {determinatives[2]} {nouns[2]} {adverbs[2]} {verbs[2]} {adjectives[2]} today."
     line_four = f"{pronouns[6]} {nouns[4]} {determinatives[4]} {adjectives[4]} {nouns[13]}"
     line_five = f"and {determinatives[5]} {nouns[5]} {adverbs[5]} {verbs[5]}s {nouns[19]} enough."
-    line_six = f"{determinatives[6]} {adjectives[6]} {nouns[17]} {conjunctions[8]},"
-    line_seven = f"{verbs[7]} {determinatives[7]} {adjectives[7]}, {verbs[8]}, {conjunctions[7]} {adverbs[11]}:"
+    line_six = f"{determinatives[6]} {adjectives[6]} {nouns[17]} {conjunctions[8]}"
+    line_seven = f"{verbs[7]} {determinatives[7]} {adjectives[7]}, {verbs[8]}, {conjunctions[7]} {adverbs[11]}"
     line_eight = f"{numbers[3]} {adverbs[5]} {verbs[3]} {verbs[12]} my {nouns[16]}"
     line_nine = f"{nouns[2]} {adjectives[9]} {verbs[9]}"
     line_ten = f"{prts[10]} {adverbs[11]} {adjectives[10]} {verbs[11]}"
@@ -100,7 +100,8 @@ def sample_analyze_syntax(text_content):
 # NYT API COMMENTS GET ROUTE
 @app.route('/news')
 def getNewsComments():
-    url = f'https://api.nytimes.com/svc/community/v3/user-content/url.json?api-key={API_KEY}&offset=0&url=https%3A%2F%2Fwww.nytimes.com%2F2019%2F06%2F21%2Fscience%2Fgiant-squid-cephalopod-video.html'
+    article = f'https://www.nytimes.com/2020/08/12/arts/19th-amendment-black-womens-suffrage-photos.html'
+    url = f'https://api.nytimes.com/svc/community/v3/user-content/url.json?api-key={API_KEY}&offset=0&url={article}'
     data = requests.get(url).json()
     comments = data['results']['comments']
 
@@ -125,8 +126,15 @@ def getNewsComments():
 def getTopHeadlines():
     url = f'https://api.nytimes.com/svc/topstories/v2/home.json?api-key={API_KEY}'
     data = requests.get(url).json()
+    urls = data['results']
 
-    return jsonify
+    url_list = []
+    index = 0
+    while index < 10:
+        url_list.append(urls[index]['url'])
+        index += 1
+
+    return jsonify(url_list)
 
 
 
