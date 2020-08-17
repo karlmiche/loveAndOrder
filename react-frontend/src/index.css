@@ -14,30 +14,21 @@ code {
 
 .poem-container {
   border: 1px solid black;
-  height: 500px;
-  width: 500px;
-}
-
-.choose-poem {
-  border: 1px solid black;
-  height: 100px;
-  width: 300px;
+  line-height: 2em;
 }
 
 .choose-article {
   border: 1px solid black;
-  height: 100px;
-  width: 300px;
+  text-align: left;
 }
 
 .how-to-use {
   border: 1px solid black;
   width: 300px;
   height: 300px;
+  text-align: left;
 }
 
 .all-articles {
   border: 1px solid black;
-  height: 500px;
-  width: 300px;
 }
