@@ -1,10 +1,13 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
+  font-family: "Didot";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #FCF0E9;
+  color: rgb(184, 8, 60);
 }
 
 code {
@@ -14,7 +17,9 @@ code {
 
 .poem-container {
   border: 1px solid black;
-  line-height: 2em;
+  height: 100vh;
+  text-align: left;
+  text-emphasis: bold;
 }
 
 .choose-article {
@@ -24,8 +29,6 @@ code {
 
 .how-to-use {
   border: 1px solid black;
-  width: 300px;
-  height: 300px;
   text-align: left;
 }
 

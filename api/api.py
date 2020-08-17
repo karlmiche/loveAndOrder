@@ -4,102 +4,11 @@ import requests
 import random
 from settings import API_KEY
 import pprint
-from google.cloud import language_v1
-from google.cloud.language_v1 import enums 
+from google_nlp import sample_analyze_syntax
 
 app = Flask(__name__)
 CORS(app)
  
-
-# SYNTAX ANALYSIS TEST CALL
-def sample_analyze_syntax(text_content):
-
-    client = language_v1.LanguageServiceClient()
-
-    # Available types: PLAIN_TEXT, HTML
-    type_ = enums.Document.Type.PLAIN_TEXT
-
-    # Optional. If not specified, the language is automatically detected.
-    language = "en"
-    document = {"content": text_content, "type": type_, "language": language}
-
-    # Available values: NONE, UTF8, UTF16, UTF32
-    encoding_type = enums.EncodingType.UTF8
-
-    # make lists of different word types
-    adverbs = []
-    verbs = []
-    pronouns = []
-    nouns = []
-    adpositions = []
-    punctuation = []
-    determinatives = []
-    adjectives = []
-    numbers = []
-    conjunctions = []
-    prts = []
-
-    response = client.analyze_syntax(document, encoding_type=encoding_type)
-    # Loop through tokens returned from the API
-    for token in response.tokens:
-        # Get the text content of this token. Usually a word or punctuation.
-        text = token.text    
-        # # Get the part of speech information for this token.
-        part_of_speech = token.part_of_speech
-    
-        # this is where we start collecting different lists of words
-        if enums.PartOfSpeech.Tag(part_of_speech.tag).name == "VERB":
-            verbs.append(text.content)
-        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "NOUN":
-            nouns.append(text.content)
-        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "ADV":
-            adverbs.append(text.content)
-        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "PRON":
-            pronouns.append(text.content)
-        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "ADP":
-            adpositions.append(text.content)
-        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "PUNCT":
-            punctuation.append(text.content)
-        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "DET":
-            determinatives.append(text.content)
-        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "ADJ":
-            adjectives.append(text.content)
-        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "NUM":
-            numbers.append(text.content)
-        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "CONJ":
-            conjunctions.append(text.content)
-        elif enums.PartOfSpeech.Tag(part_of_speech.tag).name == "PRT":
-            prts.append(text.content)
-
-    # parts = [verbs, nouns, adverbs, pronouns, adpositions, punctuation, determinatives, adjectives, numbers, conjunctions, prts]
-    # print(f"Ⓜ️{parts[0][0]}")
-
-    # not a randomized or organized poem yet
-    # line_text = str(line)
-
-    line_one = f"To {pronouns[0]}, {adjectives[0]} {nouns[0]}, {pronouns[1]} {adverbs[0]} can be {adjectives[1]},"
-    line_two = f"For as {pronouns[2]} were when {adpositions[0]} {pronouns[3]} {nouns[1]} I {verbs[0]},"
-    line_three = f"Such seems {pronouns[4]} {nouns[2]} still. {numbers[0]} {nouns[3]} {adjectives[2]},"
-    line_four = f"Have from {determinatives[0]} {nouns[4]} {verbs[1]} {numbers[1]} {pronouns[5]} {nouns[5]},"
-    line_five = f"{numbers[1]} {adjectives[3]} {nouns[6]} to {adjectives[4]} {nouns[7]} {verbs[2]},"
-    line_six = f"In process of the {nouns[7]} have I {verbs[3]},"
-    line_seven = f"{numbers[1]} {nouns[8]} {nouns[9]} in {numbers[1]} {adjectives[5]} {nouns[10]} {verbs[4]},"
-    line_eight = f"Since {adverbs[1]} I saw you {adjectives[6]}, which yet are {adjectives[7]}."
-    line_nine = f"! {adverbs[2]} {verbs[5]} {nouns[11]} like a {nouns[12]}"
-    line_ten = f"{verbs[6]} from {pronouns[5]} {nouns[13]}, and no {nouns[14]} {verbs[7]};"
-    line_eleven = f"So your {adjectives[8]} {nouns[15]}, which {verbs[8]} still {adverbs[3]} {verbs[9]},"
-    line_twelve = f"{nouns[16]} {nouns[17]}, and {pronouns[6]} {nouns[18]} {verbs[10]} be {verbs[11]}:"
-    line_thirteen = f"For {nouns[19]} of which, {verbs[12]} this {pronouns[7]} {nouns[20]} {verbs[13]}:"
-    line_fourteen = f"{numbers[2]} you were {verbs[14]} was {nouns[21]} {nouns[22]} {nouns[23]}."
-
-    sonnet = line_one, line_two, line_three, line_four, line_five, line_six, line_seven, line_eight, line_nine, line_ten, line_eleven, line_twelve, line_thirteen, line_fourteen
-    # , line_five, line_six, line_seven, line_eight, line_nine, line_ten
-    return sonnet
-    # return verbs, nouns, adverbs, pronouns, adpositions, punctuation, determinatives, adjectives, numbers, conjunctions, prts
-
-    # speech_parts.append({"Token text": text.content, "Part of speech": enums.PartOfSpeech.Tag(part_of_speech.tag).name})
-    # this returns a list of lists with these parts of speech inside
-
 # NYT API COMMENTS GET ROUTE
 @app.route('/news')
 def getNewsComments():
@@ -114,9 +23,27 @@ def getNewsComments():
         url_list.append(urls[index]['url'])
         index += 1
     
-    get_random_url = random.choice(url_list)
+    # have to hard code the possible links because some links do not have enough comments to analyze 
+    articles = ["https://www.nytimes.com/2020/08/17/us/politics/democrats-women-voters-anger.html", "https://www.nytimes.com/2020/08/17/us/politics/bernie-sanders-dnc.html",
+                "https://www.nytimes.com/2020/08/17/world/coronavirus-covid.html",
+                "https://www.nytimes.com/2020/08/17/us/k-12-schools-reopening.html",
+                "https://www.nytimes.com/2020/08/17/upshot/pandemic-recession-cities-fiscal-shortfall.html",
+                "https://www.nytimes.com/2020/08/16/style/does-rapid-covid-testing-work-weddings-parties.html",
+                "https://www.nytimes.com/2020/08/17/opinion/coronavirus-hopsitals-visitors.html",
+                "https://www.nytimes.com/2020/08/17/opinion/coronavirus-cities-suburbs.html",
+                "https://www.nytimes.com/2020/08/15/opinion/joe-biden-2020-1988-what-it-takes.html",
+                "https://www.nytimes.com/2020/08/17/opinion/coronavirus-schools-teachers.html",
+                "https://www.nytimes.com/2020/08/17/opinion/tennessee-19th-amendment.html",
+                "https://www.nytimes.com/2020/08/16/opinion/us-coronavirus-testing.html",
+                "https://www.nytimes.com/2020/08/15/opinion/sunday/biden-harris.html",
+                "https://www.nytimes.com/2020/08/17/business/giant-bikes-coronavirus-shortage.html",
+                "https://www.nytimes.com/2020/08/17/us/supreme-court-college-free-speech.html",
+                "https://www.nytimes.com/2020/08/12/well/growth-mindset-resilience.html",
+                "https://www.nytimes.com/2020/08/13/science/animal-tears.html",
+                "https://www.nytimes.com/2020/08/11/health/microaggression-medicine-doctors.html"]
     
-    article = f'{get_random_url}'
+    article = random.choice(articles)
+
     url = f'https://api.nytimes.com/svc/community/v3/user-content/url.json?api-key={API_KEY}&offset=0&url={article}'
     data = requests.get(url).json()
     comments = data['results']['comments']
@@ -138,6 +65,21 @@ def getNewsComments():
     return jsonify(sample_analyze_syntax(content))
     # return content
 
+# use this route to find links with enough comments to generate poems
+@app.route('/topnews')
+def getTopNews():
+    top_url = f'https://api.nytimes.com/svc/topstories/v2/home.json?api-key={API_KEY}'
+    data = requests.get(top_url).json()
+    urls = data['results']
+
+    url_list = []
+    index = 0
+
+    while index < len(urls):
+        url_list.append(urls[index]['url'])
+        index += 1
+    
+    return jsonify(url_list)
 
 
 
