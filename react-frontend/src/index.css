@@ -72,30 +72,44 @@ p {
 
 .line-container-one {
   text-align: left;
+  margin-left: 5vw;
+  height: 70vh;
 }
 
 .line-container-two {
   text-align: right;
+  margin-right: 5vw;
+  height: 70vh;
 }
 
 .line-container-three {
   text-align: left;
+  margin-left: 5vw;
+  height: 70vh;
 }
 
 .line-container-four {
   text-align: right;
+  margin-right: 5vw;
+  height: 70vh;
 }
 
 .line-container-five {
   text-align: left;
+  margin-left: 5vw;
+  height: 70vh;
 }
 
 .line-container-six {
   text-align: right;
+  margin-right: 5vw;
+  height: 70vh;
 }
 
 .line-container-seven {
   text-align: left;
+  margin-left: 5vw;
+  height: 70vh;
 }
 
 
