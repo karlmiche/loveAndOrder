@@ -43,7 +43,7 @@ p {
   border-left: none;
   background-color: #FCF0E9;
   font-family: 'Didot';
-  font-size: x-large;
+  font-size: 2vw;
   margin-bottom: 4vw;
 }
 
@@ -53,7 +53,7 @@ p {
 }
 
 .title-container {
-  width: 100w;
+  width: 100vw;
   height: 20vw;
   margin: 0 auto;
   margin-top: 15vw;
@@ -72,44 +72,54 @@ p {
 
 .line-container-one {
   text-align: left;
-  margin-left: 5vw;
+  /* margin-left: 10vw; */
   height: 70vh;
 }
 
 .line-container-two {
   text-align: right;
-  margin-right: 5vw;
+  /* margin-right: 10vw; */
   height: 70vh;
 }
 
 .line-container-three {
   text-align: left;
-  margin-left: 5vw;
+  /* margin-left: 10vw; */
   height: 70vh;
 }
 
 .line-container-four {
   text-align: right;
-  margin-right: 5vw;
+  /* margin-right: 10vw; */
   height: 70vh;
 }
 
 .line-container-five {
   text-align: left;
-  margin-left: 5vw;
+  /* margin-left: 10vw; */
   height: 70vh;
 }
 
 .line-container-six {
   text-align: right;
-  margin-right: 5vw;
+  /* margin-right: 10vw; */
   height: 70vh;
 }
 
 .line-container-seven {
   text-align: left;
-  margin-left: 5vw;
+  /* margin-left: 10vw; */
   height: 70vh;
+}
+
+.line-container{
+  font-size: 2.5vw;
+  font-family: 'Didot';
+  /* text-shadow: 6px 6px 0px rgba(0,0,0,0.2); */
+}
+
+.line-container:hover{
+  color: rgb(84, 55, 209);
 }
 
 
