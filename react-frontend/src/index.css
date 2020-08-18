@@ -14,32 +14,89 @@ code {
     monospace;
 }
 
+p {
+  font-family: 'Canela Deck Medium';
+}
+
 .poem-container {
   display: grid;
   height: 100vh;
   width: 100vw;
-  place-items: center;
+  /* border: 1px solid black; */
+  /* grid-template-columns: repeat(2, 1fr); */
   /* border: 1px solid black; */
 }
 
-.medium-poem-container {
-  /* display: grid; */
+/* .medium-poem-container {
+  display: grid;
   width: 50vw;
-  /* place-items: center; */
+  place-items: center;
   text-align: left;
-  border-left: 3px solid  rgb(184, 8, 60);
+  border-left: 3px solid  rgb(84, 55, 209);
   padding-left: 2vw;
-}
+} */
 
 .poem-Btn {
-  border-bottom: 3px solid  rgb(184, 8, 60);
+  border-bottom: 3px solid  rgb(84, 55, 209);
   border-top: none;
   border-right: none;
   border-left: none;
-  width: 20vw;
   background-color: #FCF0E9;
   font-family: 'Didot';
   font-size: x-large;
-  ;
+  margin-bottom: 4vw;
 }
+
+.article-container {
+  height: 100vw;
+  width: 100vw;
+}
+
+.title-container {
+  width: 100w;
+  height: 20vw;
+  margin: 0 auto;
+  margin-top: 15vw;
+}
+
+.title {
+  font-size: 7vw;
+  font-family: 'Didot';
+  text-shadow: 6px 6px 0px rgba(0,0,0,0.2);
+  border-bottom: 3px solid  rgb(84, 55, 209);
+}
+
+.title:hover{
+  color: rgb(84, 55, 209);
+}
+
+.line-container-one {
+  text-align: left;
+}
+
+.line-container-two {
+  text-align: right;
+}
+
+.line-container-three {
+  text-align: left;
+}
+
+.line-container-four {
+  text-align: right;
+}
+
+.line-container-five {
+  text-align: left;
+}
+
+.line-container-six {
+  text-align: right;
+}
+
+.line-container-seven {
+  text-align: left;
+}
+
+
 

@@ -79,7 +79,7 @@ def getTopNews():
         url_list.append(urls[index]['url'])
         index += 1
     
-    return jsonify(url_list)
+    return jsonify(urls)
 
 
 

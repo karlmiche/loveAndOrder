@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
 import PoemContainer from './components/PoemContainer';
-import ChoosePoem from './components/ChoosePoem';
-
+import Title from './components/title'
+;
 function App() {
   return (
     <div className="App">
+      <Title />
       <PoemContainer />
     </div>
   );
