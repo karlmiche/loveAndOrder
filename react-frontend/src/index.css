@@ -127,6 +127,10 @@ p {
   /* text-shadow: 6px 6px 0px rgba(0,0,0,0.2); */
 }
 
+.line-container p{
+  font-family: 'Didot';
+}
+
 .line-container:hover{
   color: rgb(84, 55, 209);
 }
