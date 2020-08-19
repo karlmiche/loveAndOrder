@@ -156,13 +156,29 @@ img {
   border: 3px solid rgb(84, 55, 209);
   border-radius: 20px;
   opacity: 0.2;
+  background-color: rgb(84, 55, 209);
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: left;
+}
+
+.step p {
+  font-family: 'Arial';
 }
 
 .chart-wrapper {
   width: 60%;
+  height: 400px;
   margin-left: 40%;
   border: 1px solid rgb(84, 55, 209);
   border-radius: 20px;
+  box-shadow: 5px 10px blue;
+  background-color: cornsilk;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.lil-link{ 
+  color: white;
 }
 
 
