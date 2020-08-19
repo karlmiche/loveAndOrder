@@ -152,7 +152,7 @@ img {
   padding: 20px;
   margin-right: 70%;
   margin-left: 30px;
-  margin-bottom: 60vh;
+  margin-bottom: 50vh;
   border: 3px solid rgb(84, 55, 209);
   border-radius: 20px;
   opacity: 0.2;
@@ -167,19 +167,39 @@ img {
 }
 
 .chart-wrapper {
-  width: 60%;
-  height: 400px;
+  width: 50%;
   margin-left: 40%;
   border: 1px solid rgb(84, 55, 209);
   border-radius: 20px;
   box-shadow: 5px 10px blue;
   background-color: cornsilk;
+  padding: 5px;
   font-family: 'Courier New', Courier, monospace;
 }
 
 .lil-link{ 
   color: white;
 }
+
+.code-block{
+  width: 100%;
+  padding: 20px;
+  margin-right: 70%;
+  margin-left: 30px;
+  margin-bottom: 60vh;
+  border-radius: 20px;
+  opacity: 0.2;
+  text-align: left;
+}
+
+.code-block-one {
+  height: auto;
+  width: 70%;
+  border-radius: 20px;
+  box-shadow: 5px 10px lightslategray;
+}
+
+
 
 
 
